@@ -1,8 +1,17 @@
 import React from "react"
 import { Link } from "gatsby"
 import styled from "styled-components"
+import styles from "./layout.module.css"
 
 import { rhythm, scale } from "../utils/typography"
+
+const ListLink = props => (
+  <li style={{ display: `inline-block`, marginRight: `1rem` }}>
+    <Link className={styles.link} to={props.to}>
+      {props.children}
+    </Link>
+  </li>
+)
 
 class Layout extends React.Component {
   render() {
@@ -11,48 +20,33 @@ class Layout extends React.Component {
     const blogPath = `${__PATH_PREFIX__}/blog/`
     let header
 
-    if (location.pathname === rootPath || location.pathname === blogPath) {
-      header = (
-        <h1
+    header = (
+      <header style={{ marginBottom: `1.5rem` }}>
+        <Link
           style={{
-            ...scale(1.5),
-            marginBottom: rhythm(1.5),
-            marginTop: 0,
+            boxShadow: `none`,
+            textDecoration: `none`,
+            color: `inherit`,
           }}
+          to="/"
         >
-          <Link
+          <h2
             style={{
-              boxShadow: `none`,
-              textDecoration: `none`,
-              color: `inherit`,
+              // ...scale(0.5),
+              display: `inline`,
+              fontFamily: `Courier Prime Code, Montserrat, sans-serif`,
             }}
-            to={location.pathname === blogPath ? `/blog/` : `/`}
           >
             {title}
-          </Link>
-        </h1>
-      )
-    } else {
-      header = (
-        <h3
-          style={{
-            fontFamily: `Montserrat, sans-serif`,
-            marginTop: 0,
-          }}
-        >
-          <Link
-            style={{
-              boxShadow: `none`,
-              textDecoration: `none`,
-              color: `inherit`,
-            }}
-            to={`/blog/`}
-          >
-            {title}
-          </Link>
-        </h3>
-      )
-    }
+          </h2>
+        </Link>
+        <ul style={{ listStyle: `none`, float: `right` }}>
+          <ListLink to="/">Home</ListLink>
+          <ListLink to="/blog/">Blog</ListLink>
+          <ListLink to="/about/">About</ListLink>
+        </ul>
+      </header>
+    )
     return (
       <Wrapper>
         <div
